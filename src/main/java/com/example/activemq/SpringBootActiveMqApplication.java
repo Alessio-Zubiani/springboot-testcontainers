@@ -8,9 +8,11 @@ import com.example.activemq.service.MessageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Profile;
 
 import lombok.RequiredArgsConstructor;
 
+@Profile("!test")
 @SpringBootApplication
 @RequiredArgsConstructor
 public class SpringBootActiveMqApplication implements CommandLineRunner {
