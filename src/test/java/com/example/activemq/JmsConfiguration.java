@@ -3,6 +3,7 @@ package com.example.activemq;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
@@ -11,6 +12,9 @@ import org.testcontainers.containers.GenericContainer;
 import jakarta.jms.JMSException;
 
 @TestConfiguration
+@ComponentScan(basePackages = { 
+	"com.example.activemq.service" 
+})
 public class JmsConfiguration {
 	
 	private static final GenericContainer<?> activeMQContainer;
