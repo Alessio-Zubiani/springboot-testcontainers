@@ -20,6 +20,7 @@ public class MessageServiceImpl implements MessageService {
 		
 		log.info("Sending message: [{}]", message);
 		this.jmsTemplate.convertAndSend("queue", message);
+		log.info("Message sent");
 	}
 
 }
