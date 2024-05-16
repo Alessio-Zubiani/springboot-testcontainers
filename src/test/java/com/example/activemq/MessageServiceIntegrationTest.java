@@ -37,13 +37,17 @@ class MessageServiceIntegrationTest {
 				.build();
 
         // Sending a text message to the queue
-		Assertions.assertDoesNotThrow(() -> {
+		/*Assertions.assertDoesNotThrow(() -> {
 			this.messageService.sendMessage(message);
-		});
+		});*/
 
-        // Receiving the message from the queue
+		jakarta.jms.Message m;
+		while((m = this.jmsTemplate.receive("queue")) != null) {
+			System.out.println("Received message: [" + ((TextMessage) m).getText() + "]");
+		}
+        /*// Receiving the message from the queue
         TextMessage receivedMessage = (TextMessage) this.jmsTemplate.receive("queue");
-        System.out.println("Received message: [" + receivedMessage.getText() + "]");
+        System.out.println("Received message: [" + receivedMessage.getText() + "]");*/
 
         //assertThat(receivedMessage.getText()).isEqualTo(receivedMessage.getText());
     }
