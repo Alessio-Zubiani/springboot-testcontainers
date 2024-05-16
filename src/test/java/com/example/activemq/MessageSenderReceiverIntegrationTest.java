@@ -16,7 +16,7 @@ import jakarta.jms.TextMessage;
 @SpringBootTest
 @ExtendWith(OutputCaptureExtension.class)
 @Import(JmsConfiguration.class)
-class MessageSenderReceiverIT {
+class MessageSenderReceiverIntegrationTest {
 	
 	@Autowired
 	private JmsTemplate jmsTemplate;
