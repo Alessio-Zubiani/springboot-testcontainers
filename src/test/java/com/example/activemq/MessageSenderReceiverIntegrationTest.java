@@ -13,6 +13,7 @@ import org.springframework.jms.core.JmsTemplate;
 import jakarta.jms.JMSException;
 import jakarta.jms.TextMessage;
 
+
 @SpringBootTest
 @ExtendWith(OutputCaptureExtension.class)
 @Import(JmsConfiguration.class)
