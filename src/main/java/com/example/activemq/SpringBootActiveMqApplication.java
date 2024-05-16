@@ -24,11 +24,11 @@ public class SpringBootActiveMqApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		/*this.messageService.sendMessage(Message.builder()
+		this.messageService.sendMessage(Message.builder()
 				.id(100L)
 				.content("Test message")
 				.date(new Date())
-				.build());*/
+				.build());
 	}
 
 }

@@ -11,17 +11,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.system.OutputCaptureExtension;
-import org.springframework.context.annotation.Import;
+import org.springframework.jms.core.JmsTemplate;
 
 import jakarta.jms.JMSException;
 
-@SpringBootTest
+@SpringBootTest(classes = { JmsConfiguration.class })
 @ExtendWith(OutputCaptureExtension.class)
-@Import(JmsConfiguration.class)
 class MessageServiceIntegrationTest {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private JmsTemplate jmsTemplate;
 	
 	
 	@Test
@@ -37,12 +39,11 @@ class MessageServiceIntegrationTest {
 			this.messageService.sendMessage(message);
 		});
 
-        /*
         // Receiving the message from the queue
         TextMessage receivedMessage = (TextMessage) this.jmsTemplate.receive("test.queue");
         System.out.println("Received message: [" + receivedMessage.getText() + "]");
 
-        assertThat(dummyPayload).isEqualTo(receivedMessage.getText());*/
+        assertThat(dummyPayload).isEqualTo(receivedMessage.getText());
     }
 
 }
