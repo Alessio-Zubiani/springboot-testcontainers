@@ -15,7 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import jakarta.jms.JMSException;
 import jakarta.jms.ObjectMessage;
-import jakarta.jms.TextMessage;
 
 
 @ExtendWith(SpringExtension.class)
@@ -43,7 +42,8 @@ class MessageServiceIntegrationTest {
 		});
 
         // Receiving the message from the queue
-        Message receivedMessage = (Message) ((ObjectMessage) this.jmsTemplate.receive("queue")).getObject();
+		jakarta.jms.Message m = this.jmsTemplate.receive("queue");
+        Message receivedMessage = (Message) ((ObjectMessage) m).getObject();
         System.out.println("Received message: [" + receivedMessage + "]");
 
         //assertThat(receivedMessage.getText()).isEqualTo(receivedMessage.getText());
