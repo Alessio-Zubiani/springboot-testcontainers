@@ -9,12 +9,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.context.annotation.Import;
 
 import jakarta.jms.JMSException;
 
-
+@SpringBootTest
 @ExtendWith(OutputCaptureExtension.class)
 @Import(JmsConfiguration.class)
 class MessageServiceIntegrationTest {
