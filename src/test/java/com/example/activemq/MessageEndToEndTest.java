@@ -26,7 +26,7 @@ public class MessageEndToEndTest {
 	@Test
 	void testSendMessage() throws Exception {
 		
-		this.mockMvc.perform(get("/api/v1/send"))
+		this.mockMvc.perform(get("/api/v1/messages/send"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$").value("Message sent successfully"));
 	}
@@ -34,7 +34,7 @@ public class MessageEndToEndTest {
 	@Test
 	void testReceiveMessage() throws Exception {
 		
-		this.mockMvc.perform(get("/api/v1/receive"))
+		this.mockMvc.perform(get("/api/v1/messages/receive"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.content").value("End2End message"));
 	}

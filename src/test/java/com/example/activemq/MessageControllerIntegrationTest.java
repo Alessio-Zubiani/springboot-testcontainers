@@ -30,7 +30,7 @@ public class MessageControllerIntegrationTest {
 	void testSendMessage() throws Exception {
 		
 		Mockito.doNothing().when(this.service).sendMessage(Mockito.any(Message.class));
-		this.mockMvc.perform(get("/api/v1/send"))
+		this.mockMvc.perform(get("/api/v1/messages/send"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$").value("Message sent successfully"));
 		
