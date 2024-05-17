@@ -9,6 +9,8 @@ import com.example.activemq.service.Message;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.jms.core.JmsTemplate;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(MessageController.class)
 @ContextConfiguration(classes = { JmsConfiguration.class })
+@TestInstance(Lifecycle.PER_CLASS)
 public class MessageEndToEndTest {
 	
 	@Autowired
