@@ -5,10 +5,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.activemq.controller.MessageController;
+import com.example.activemq.service.Message;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,6 +21,9 @@ public class MessageEndToEndTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	private JmsTemplate jmsTemplate;
 	
 	
 	@Test
@@ -34,6 +40,18 @@ public class MessageEndToEndTest {
 		this.mockMvc.perform(get("/api/v1/receive"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.content").value("End2End message"));
+	}
+	
+	@AfterAll
+	void tearDown() {
+		//clear all messages from queue
+		
+		Message m = (Message) this.jmsTemplate.receiveAndConvert("queue");
+		System.out.println("Read message: " + m);
+		while(m != null) {
+			m = (Message) this.jmsTemplate.receiveAndConvert("queue");
+			System.out.println("Read message: " + m);
+		}
 	}
 
 }
