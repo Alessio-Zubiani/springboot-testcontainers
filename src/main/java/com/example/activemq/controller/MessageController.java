@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.jms.JMSException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 @RestController
 @RequestMapping("/api/v1")
@@ -23,9 +26,10 @@ public class MessageController {
 	@GetMapping("send")
 	public ResponseEntity<String> sendMessage() {
 		
+		log.info("Sending message");
 		this.service.sendMessage(Message.builder()
 				.id(100L)
-				.content("Test message")
+				.content("End2End message")
 				.date(new Date())
 				.build());
 		
@@ -37,6 +41,7 @@ public class MessageController {
 	public ResponseEntity<Message> receiveMessage() throws JMSException {
 		
 		Message message = this.service.receiveMessage();
+		log.info("Received message: [{}]", message);
 		
 		return ResponseEntity.ok()
 				.body(message);

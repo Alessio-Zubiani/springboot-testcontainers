@@ -27,8 +27,9 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public Message receiveMessage() throws JMSException {
 		
+		log.info("Try receiving message");
 		Message msg = (Message) this.jmsTemplate.receiveAndConvert("queue");
-		log.info("Received: [{}]", msg);
+		log.info("Received message: [{}]", msg);
 		
 		return msg;
 	}
