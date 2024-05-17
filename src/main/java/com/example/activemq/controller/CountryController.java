@@ -28,7 +28,6 @@ public class CountryController {
 	@GetMapping
 	public ResponseEntity<List<Country>> sendMessage() {
 		
-		log.info("Sending message");
 		FullCountryInfoAllCountriesResponse response = this.service.getAllCountriesInfo();
 		
 		List<Country> list = new ArrayList<>();
