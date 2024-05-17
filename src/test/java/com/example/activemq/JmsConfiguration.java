@@ -13,7 +13,7 @@ import jakarta.jms.JMSException;
 
 @TestConfiguration
 @ComponentScan(basePackages = { 
-	"com.example.activemq.service" 
+	"com.example.activemq.service", "com.example.activemq.ws.client" 
 })
 public class JmsConfiguration {
 	
