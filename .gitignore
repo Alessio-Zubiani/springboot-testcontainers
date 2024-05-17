@@ -20,5 +20,4 @@
 .classpath
 .factorypath
 .project
-target/
 activemq-data/
