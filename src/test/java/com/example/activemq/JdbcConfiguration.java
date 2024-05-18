@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.containers.wait.strategy.WaitAllStrategy;
 import org.testcontainers.oracle.OracleContainer;
 
 
@@ -20,7 +21,12 @@ public class JdbcConfiguration {
 	static {
 		oracleContainer = new OracleContainer("gvenzl/oracle-free:slim-faststart")
 				//.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1));
-				.waitingFor(Wait.forLogMessage(".*Ready to accept connections.*\\\\n\"", 1));
+				//.waitingFor(Wait.forLogMessage(".*Ready to accept connections.*\\\\n\"", 1));
+			.waitingFor(
+					new WaitAllStrategy()
+			            .withStrategy(Wait.forLogMessage(".*database system is ready to accept connections.*\\s", 2))
+			            .withStrategy(Wait.forListeningPort())
+			    );
 				
 		oracleContainer.start();
 	}
