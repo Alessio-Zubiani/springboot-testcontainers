@@ -1,7 +1,5 @@
 package com.example.activemq;
 
-import java.time.Duration;
-
 import javax.sql.DataSource;
 
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -12,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.oracle.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
@@ -20,30 +18,31 @@ import org.testcontainers.utility.MountableFile;
 import jakarta.persistence.EntityManagerFactory;
 
 
-@SuppressWarnings("resource")
 @TestConfiguration
 @ComponentScan(basePackages = { 
 	"com.example.activemq.service" 
 })
 public class JdbcConfiguration {
 	
+	//private static final GenericContainer<?> oracleContainer;
 	private static final OracleContainer oracleContainer;
 
 	static {
-		String regex = ".*(\"message\":\\s?\"started\".*|] started\n$)";
+		/*oracleContainer = new GenericContainer<>(DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
+				.asCompatibleSubstituteFor("gvenzl/oracle-free"))
+			    .waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1))
+			    .with;*/
 		
 		oracleContainer = new OracleContainer(
 			    DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
 			            .asCompatibleSubstituteFor("gvenzl/oracle-free"))
+					.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1))
 			        .withDatabaseName("EMPLOYEE_DB")
 			        .withUsername("EMPLOYEE_USER")
 			        .withPassword(("EMPLOYEE_PASSWORD"))
 			        .withCopyFileToContainer(
 			        		MountableFile.forHostPath("oracle-initscript.sql"), "init_employee_db.sql");
 		
-		oracleContainer.setWaitStrategy((new LogMessageWaitStrategy())
-    		    .withRegEx(regex)
-    		    .withStartupTimeout(Duration.ofMinutes(5)));
 		oracleContainer.start();
 	}
 	
