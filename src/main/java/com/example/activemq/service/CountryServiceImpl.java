@@ -1,4 +1,4 @@
-package com.example.activemq.service;
+/*package com.example.activemq.service;
 
 import java.io.StringWriter;
 
@@ -52,3 +52,4 @@ public class CountryServiceImpl implements CountryService {
 	}
 
 }
+*/

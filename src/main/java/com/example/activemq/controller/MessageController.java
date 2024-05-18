@@ -1,4 +1,4 @@
-package com.example.activemq.controller;
+/*package com.example.activemq.controller;
 
 import java.util.Date;
 
@@ -48,3 +48,4 @@ public class MessageController {
 	}
 
 }
+*/

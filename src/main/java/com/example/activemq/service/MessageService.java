@@ -1,4 +1,4 @@
-package com.example.activemq.service;
+/*package com.example.activemq.service;
 
 import jakarta.jms.JMSException;
 
@@ -9,3 +9,4 @@ public interface MessageService {
 	Message receiveMessage() throws JMSException;
 
 }
+*/

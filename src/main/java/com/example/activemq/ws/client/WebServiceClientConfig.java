@@ -1,4 +1,4 @@
-package com.example.activemq.ws.client;
+/*package com.example.activemq.ws.client;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,3 +27,4 @@ public class WebServiceClientConfig {
 	}
 
 }
+*/

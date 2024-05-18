@@ -1,4 +1,4 @@
-package com.example.activemq.config;
+/*package com.example.activemq.config;
 
 import org.apache.activemq.broker.BrokerService;
 import org.springframework.context.annotation.Bean;
@@ -28,3 +28,4 @@ public class JmsConfig {
 	}
 
 }
+*/

@@ -1,4 +1,4 @@
-package com.example.activemq.ws.client;
+/*package com.example.activemq.ws.client;
 
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
@@ -9,3 +9,4 @@ public class WebServiceClient extends WebServiceGatewaySupport {
 	}
 	
 }
+*/

@@ -1,4 +1,4 @@
-package com.example.activemq;
+/*package com.example.activemq;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -40,4 +40,4 @@ public class JmsConfiguration {
         return jmsTemplate;
     }
 
-}
+}*/

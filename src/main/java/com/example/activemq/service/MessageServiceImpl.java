@@ -1,4 +1,4 @@
-package com.example.activemq.service;
+/*package com.example.activemq.service;
 
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
@@ -35,3 +35,4 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 }
+*/
