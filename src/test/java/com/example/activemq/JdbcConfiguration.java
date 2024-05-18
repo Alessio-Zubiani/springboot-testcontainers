@@ -1,21 +1,10 @@
 package com.example.activemq;
 
-import javax.sql.DataSource;
-
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.testcontainers.containers.wait.strategy.Wait;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.oracle.OracleContainer;
-import org.testcontainers.utility.DockerImageName;
-import org.testcontainers.utility.MountableFile;
-
-import jakarta.persistence.EntityManagerFactory;
 
 
 @TestConfiguration
@@ -25,13 +14,16 @@ import jakarta.persistence.EntityManagerFactory;
 public class JdbcConfiguration {
 	
 	//private static final GenericContainer<?> oracleContainer;
-	private static final OracleContainer oracleContainer;
+	public static OracleContainer oracleContainer;
 
 	static {
+		oracleContainer = new OracleContainer("gvenzl/oracle-free:slim-faststart");
+		oracleContainer.start();
+	}
 		/*oracleContainer = new GenericContainer<>(DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
 				.asCompatibleSubstituteFor("gvenzl/oracle-free"))
 			    .waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1))
-			    .with;*/
+			    .with;
 		
 		oracleContainer = new OracleContainer(
 			    DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
@@ -39,12 +31,19 @@ public class JdbcConfiguration {
 			        .withDatabaseName("EMPLOYEE_DB")
 			        .withUsername("EMPLOYEE_USER")
 			        .withPassword("EMPLOYEE_PASSWORD")
-			        /*.withCopyFileToContainer(
-			        		MountableFile.forHostPath("oracle-initscript.sql"), "init_employee_db.sql")*/;
+			        .withCopyFileToContainer(
+			        		MountableFile.forHostPath("oracle-initscript.sql"), "init_employee_db.sql");
 		
 		oracleContainer.start();
-		//oracleContainer.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1));
-	}
+		oracleContainer.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1));
+	}*/
+	
+	@DynamicPropertySource
+    public static void properties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", oracleContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", oracleContainer::getUsername);
+        registry.add("spring.datasource.password", oracleContainer::getPassword);
+    }
 	
 	/*@Bean
     public DataSource getDataSource() {
