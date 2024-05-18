@@ -43,10 +43,10 @@ public class JdbcConfiguration {
 			        		MountableFile.forHostPath("oracle-initscript.sql"), "init_employee_db.sql")*/;
 		
 		oracleContainer.start();
-		oracleContainer.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1));
+		//oracleContainer.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1));
 	}
 	
-	@Bean
+	/*@Bean
     public DataSource getDataSource() {
 		
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
@@ -70,6 +70,6 @@ public class JdbcConfiguration {
 	@Bean
 	public PlatformTransactionManager bicompTransactionManager(EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
-	}
+	}*/
 
 }
