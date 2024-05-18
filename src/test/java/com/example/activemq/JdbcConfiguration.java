@@ -36,14 +36,14 @@ public class JdbcConfiguration {
 		oracleContainer = new OracleContainer(
 			    DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
 			            .asCompatibleSubstituteFor("gvenzl/oracle-free"))
-					.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1))
 			        .withDatabaseName("EMPLOYEE_DB")
 			        .withUsername("EMPLOYEE_USER")
-			        .withPassword(("EMPLOYEE_PASSWORD"))
-			        .withCopyFileToContainer(
-			        		MountableFile.forHostPath("oracle-initscript.sql"), "init_employee_db.sql");
+			        .withPassword("EMPLOYEE_PASSWORD")
+			        /*.withCopyFileToContainer(
+			        		MountableFile.forHostPath("oracle-initscript.sql"), "init_employee_db.sql")*/;
 		
 		oracleContainer.start();
+		oracleContainer.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1));
 	}
 	
 	@Bean
