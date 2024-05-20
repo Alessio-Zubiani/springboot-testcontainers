@@ -1,5 +1,7 @@
 package com.example.activemq;
 
+import java.util.HashMap;
+
 import javax.sql.DataSource;
 
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.oracle.OracleContainer;
@@ -74,7 +77,7 @@ public class JdbcConfiguration {
     }*/
 	
 	@Bean
-    public DataSource getDataSource() {
+    public DataSource dataSource() {
 		
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("oracle.jdbc.OracleDriver");
@@ -86,17 +89,22 @@ public class JdbcConfiguration {
     }
 	
 	@Bean
-	public LocalContainerEntityManagerFactoryBean bicompEntityManager(EntityManagerFactoryBuilder builder, DataSource dataSource) {
+	public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
+		return new EntityManagerFactoryBuilder(new HibernateJpaVendorAdapter(), new HashMap<>(), null);
+	}
+	
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManager(EntityManagerFactoryBuilder entityManagerFactoryBuilder, DataSource dataSource) {
 		
-		return builder
+		return entityManagerFactoryBuilder
 				.dataSource(dataSource)
 				.packages("com.example.activemq.service")
 				.build();
 	}
 	
 	@Bean
-	public PlatformTransactionManager bicompTransactionManager(EntityManagerFactory entityManagerFactory) {
-		return new JpaTransactionManager(entityManagerFactory);
+	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManager) {
+		return new JpaTransactionManager(entityManager);
 	}
 
 }
