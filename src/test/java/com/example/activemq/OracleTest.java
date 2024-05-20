@@ -68,7 +68,7 @@ public class OracleTest {
         registry.add("spring.datasource.password", () -> oracleContainer.getPassword());
     }
  
-    /*@Test
+    @Test
     void testTableExists() throws SQLException {
         try (Connection conn = this.dataSource.getConnection();
             ResultSet resultSet = conn.prepareStatement("SHOW TABLES").executeQuery();) {
@@ -79,7 +79,7 @@ public class OracleTest {
         }
     }
     
-    @Bean
+    /*@Bean
     public DataSource dataSource() {
 		
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
