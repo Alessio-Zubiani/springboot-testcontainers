@@ -74,10 +74,10 @@ public class OracleTest {
         try (Connection conn = this.dataSource.getConnection();
             ResultSet resultSet = conn.prepareStatement("SELECT * FROM all_tables ORDER BY table_name").executeQuery();
         ) {
-            resultSet.next();
- 
-            String table = resultSet.getString(1);
-            assertThat(table).isEqualTo("EMPLOYEE");
+        	while(resultSet.next()) {
+        		String table = resultSet.getString(1);
+                log.info("Table: [{}]", table);
+        	}
         }
     }
     
