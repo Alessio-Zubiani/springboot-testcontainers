@@ -57,6 +57,7 @@ public class OracleTest {
 				DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
 					.asCompatibleSubstituteFor("gvenzl/oracle-free"))
             .withUsername("EMPLOYEE_DB")
+            .withReuse(true)
             .withInitScript("init_employee_db.sql")
             .withStartupTimeout(Duration.ofMinutes(5L));
 	
