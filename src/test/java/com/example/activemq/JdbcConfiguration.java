@@ -1,12 +1,15 @@
 package com.example.activemq;
 
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.containers.wait.strategy.WaitAllStrategy;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.oracle.OracleContainer;
+import org.testcontainers.utility.DockerImageName;
 
 
 @TestConfiguration
@@ -15,8 +18,17 @@ import org.testcontainers.oracle.OracleContainer;
 })
 public class JdbcConfiguration {
 	
+	@Container
+    @ServiceConnection
+    static OracleContainer oracleContainer = new OracleContainer(
+            DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
+                    .asCompatibleSubstituteFor("gvenzl/oracle-free"))
+    		.withDatabaseName("EMPLOYEE_DB")
+	        .withUsername("EMPLOYEE_USER")
+	        .withPassword("EMPLOYEE_PASSWORD");
+	
 	//private static final GenericContainer<?> oracleContainer;
-	public static OracleContainer oracleContainer;
+	/*public static OracleContainer oracleContainer;
 
 	static {
 		oracleContainer = new OracleContainer("gvenzl/oracle-free:slim-faststart")
@@ -30,7 +42,7 @@ public class JdbcConfiguration {
 				
 		oracleContainer.start();
 	}
-		/*oracleContainer = new GenericContainer<>(DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
+		oracleContainer = new GenericContainer<>(DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
 				.asCompatibleSubstituteFor("gvenzl/oracle-free"))
 			    .waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1))
 			    .with;
@@ -46,7 +58,7 @@ public class JdbcConfiguration {
 		
 		oracleContainer.start();
 		oracleContainer.waitingFor(Wait.forLogMessage(".*DATABASE IS READY TO USE!.*\\s", 1));
-	}*/
+	}
 	
 	@DynamicPropertySource
     public static void properties(DynamicPropertyRegistry registry) {
@@ -55,7 +67,7 @@ public class JdbcConfiguration {
         registry.add("spring.datasource.password", oracleContainer::getPassword);
     }
 	
-	/*@Bean
+	@Bean
     public DataSource getDataSource() {
 		
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
