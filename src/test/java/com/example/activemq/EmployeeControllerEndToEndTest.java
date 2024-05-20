@@ -16,7 +16,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = { SpringBootActiveMqApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@WebMvcTest(EmployeeController.class)
 @ContextConfiguration(classes = { JdbcConfiguration.class })
 class EmployeeControllerEndToEndTest {	
