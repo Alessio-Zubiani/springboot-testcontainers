@@ -121,6 +121,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                	<sourceDestDir>${project.basedir}/src/main/java</sourceDestDir>
                     <packageName>org.oorsprong.websamples</packageName>
                     <wsdlDirectory>${project.basedir}/src/main/resources/wsdl</wsdlDirectory>
                     <wsdlFiles>
