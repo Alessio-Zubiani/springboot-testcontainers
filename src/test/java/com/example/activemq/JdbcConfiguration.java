@@ -14,6 +14,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.oracle.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -39,19 +40,29 @@ public class JdbcConfiguration {
         DockerImageName imageName = DockerImageName.parse(DOCKER_IMAGE_NAME).asCompatibleSubstituteFor("gvenzl/oracle-free");
         
         CONTAINER = (OracleContainer) new OracleContainer(imageName)
-                .withDatabaseName(ORACLE_DATABASE)
+                /*.withDatabaseName(ORACLE_DATABASE)
                 .withUsername(ORACLE_USER)
                 .withPassword(ORACLE_PASSWORD)
                 .withEnv("ORACLE_DATABASE", ORACLE_DATABASE)
                 .withEnv("ORACLE_USER", ORACLE_USER)
-                .withEnv("ORACLE_PASSWORD", ORACLE_PASSWORD);
+                .withEnv("ORACLE_PASSWORD", ORACLE_PASSWORD)*/
+        		;
 
+        System.out.println("STARTING ORACLE CONTAINER");
         CONTAINER.start();
         /*CONTAINER.setWaitStrategy(Wait.defaultWaitStrategy()
                 .withStartupTimeout(Duration.ofSeconds(300)));*/
-        CONTAINER.waitingFor(
+        System.out.println("WAITING ORACLE CONTAINER TO START");
+        /*CONTAINER.waitingFor(
         	Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(300L))
-        );
+        );*/
+        
+        String regex = ".*(\"message\":\\s?\"started\".*|] started\n$)";
+        CONTAINER.setWaitStrategy((new LogMessageWaitStrategy())
+            .withRegEx(regex)
+            .withStartupTimeout(Duration.ofMinutes(5)));
+        
+        System.out.println("ORACLE CONTAINER STARTED");
     }
 	
 	/*private static final GenericContainer<?> oracleContainer;
