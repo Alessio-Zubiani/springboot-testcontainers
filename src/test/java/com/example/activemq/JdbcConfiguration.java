@@ -1,15 +1,21 @@
 package com.example.activemq;
 
+import javax.sql.DataSource;
+
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.containers.wait.strategy.WaitAllStrategy;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.oracle.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
+
+import jakarta.persistence.EntityManagerFactory;
 
 
 @TestConfiguration
@@ -65,7 +71,7 @@ public class JdbcConfiguration {
         registry.add("spring.datasource.url", oracleContainer::getJdbcUrl);
         registry.add("spring.datasource.username", oracleContainer::getUsername);
         registry.add("spring.datasource.password", oracleContainer::getPassword);
-    }
+    }*/
 	
 	@Bean
     public DataSource getDataSource() {
@@ -91,6 +97,6 @@ public class JdbcConfiguration {
 	@Bean
 	public PlatformTransactionManager bicompTransactionManager(EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
-	}*/
+	}
 
 }
