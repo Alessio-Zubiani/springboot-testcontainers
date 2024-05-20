@@ -18,7 +18,7 @@ import jakarta.persistence.EntityManagerFactory;
 
 @TestConfiguration
 @ComponentScan(basePackages = { 
-	"com.example.activemq.service", "com.example.activemq.ws.client" 
+	"com.example.activemq.service", "com.example.activemq.repository" 
 })
 public class JdbcConfiguration extends AbstractIntegrationTest {
 	
