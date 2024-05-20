@@ -56,11 +56,9 @@ public class OracleTest {
 	private static final OracleContainer oracleContainer = new OracleContainer(
 				DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
 					.asCompatibleSubstituteFor("gvenzl/oracle-free"))
-			.withDatabaseName("EMPLOYEE_DB")
-            .withUsername("EMPLOYEE_USER")
-            .withPassword("EMPLOYEE_PASSWORD")
-            .withStartupTimeout(Duration.ofMinutes(5L))
-            .withInitScript("init_employee_db.sql");
+            .withUsername("TEST")
+            .withInitScript("init_employee_db.sql")
+            .withStartupTimeout(Duration.ofMinutes(5L));
 	
 	@DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
