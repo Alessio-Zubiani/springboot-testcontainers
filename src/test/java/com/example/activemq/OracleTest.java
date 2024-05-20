@@ -1,4 +1,4 @@
-/*package com.example.activemq;
+package com.example.activemq;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,32 +14,30 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.MountableFile;
 
 @SpringBootTest
 @Testcontainers
-public class MySQLTest {
+public class OracleTest {
 	
 	@Autowired
     private DataSource dataSource;
  
     @Container
-    private static final GenericContainer<?> mySQLContainer = new GenericContainer<>("mysql:latest")
-            .withEnv("MYSQL_ROOT_PASSWORD", "pass")
-            .withEnv("MYSQL_DATABASE", "testcontainer")
-            .withEnv("MYSQL_USER", "user")
-            .withEnv("MYSQL_PASSWORD", "pass")
-            .withExposedPorts(3306)
-            .waitingFor(Wait.forLogMessage(".*mysqld: ready for connections.*", 2))
+    private static final GenericContainer<?> oracleContainer = new GenericContainer<>("gvenzl/oracle-free:slim-faststart")
+            /*.withEnv("ORACLE_ROOT_PASSWORD", "pass")
+            .withEnv("ORACLE_DATABASE", "testcontainer")*/
+            .withEnv("ORACLE_USER", "user")
+            .withEnv("ORACLE_PASSWORD", "pass")
+            .withExposedPorts(1521)
+            //.waitingFor(Wait.forLogMessage(".*mysqld: ready for connections.*", 2))
             //.withCopyFileToContainer(MountableFile.forClasspathResource("init.sql"), "/docker-entrypoint-initdb.d/schema.sql")
             ;
  
     @DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
-        String url = "jdbc:mysql://localhost:" + mySQLContainer.getMappedPort(3306) + "/testcontainer";
+        String url = "jdbc:mysql://localhost:" + oracleContainer.getMappedPort(1521) + "/testcontainer";
         registry.add("spring.datasource.url", () -> url);
         registry.add("spring.datasource.username", () -> "user");
         registry.add("spring.datasource.password", () -> "pass");
@@ -57,4 +55,3 @@ public class MySQLTest {
     }
 
 }
-*/
