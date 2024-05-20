@@ -56,7 +56,7 @@ public class OracleTest {
 	private static final OracleContainer oracleContainer = new OracleContainer(
 				DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
 					.asCompatibleSubstituteFor("gvenzl/oracle-free"))
-            .withUsername("TEST")
+            .withUsername("EMPLOYEE_DB")
             .withInitScript("init_employee_db.sql")
             .withStartupTimeout(Duration.ofMinutes(5L));
 	
