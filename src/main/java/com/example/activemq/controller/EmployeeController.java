@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.activemq.entity.Employee;
 import com.example.activemq.service.EmployeeService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class EmployeeController {
 		
 		List<Employee> list = this.service.getEmployees();
 		
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
 	@PostMapping
@@ -34,7 +35,7 @@ public class EmployeeController {
 		
 		Employee e = this.service.createEmployee();
 		
-		return ResponseEntity.ok().body(e);
+		return ResponseEntity.status(HttpStatus.CREATED).body(e);
 	}
 	
 }
