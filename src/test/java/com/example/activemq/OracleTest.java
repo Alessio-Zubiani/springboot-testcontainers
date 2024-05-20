@@ -34,8 +34,7 @@ public class OracleTest {
  
     /*@Container
     private static final GenericContainer<?> oracleContainer = new GenericContainer<>("gvenzl/oracle-free:slim-faststart")
-            .withEnv("ORACLE_ROOT_PASSWORD", "pass")
-            .withEnv("ORACLE_DATABASE", "testcontainer")
+            .withEnv("ORACLE_DATABASE", "EMPLOYEE_DB")
             .withEnv("ORACLE_USER", "user")
             .withEnv("ORACLE_PASSWORD", "pass")
             .withExposedPorts(1521)
@@ -45,8 +44,8 @@ public class OracleTest {
     
     @DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
-    	//jdbc:tc:oracle:thin:localhost:1521/testcontainer
-    	String url = "jdbc:tc:" + oracleContainer.getDockerImageName() + "://testcontainer";
+    	//jdbc:oracle:thin:@localhost:32802/EMPLOYEE_DB
+    	String url = "jdbc:oracle:thin:@" + oracleContainer.getHost() + ":" + oracleContainer.getMappedPort(1521) + "/EMPLOYEE_DB";
     	log.info("URL: [{}]", url);
     	registry.add("spring.datasource.url", () -> url);
         registry.add("spring.datasource.username", () -> "user");
@@ -60,7 +59,8 @@ public class OracleTest {
 			.withDatabaseName("EMPLOYEE_DB")
             .withUsername("EMPLOYEE_USER")
             .withPassword("EMPLOYEE_PASSWORD")
-            .withStartupTimeout(Duration.ofMinutes(5L));
+            .withStartupTimeout(Duration.ofMinutes(5L))
+            .withInitScript("init_employee_db.sql");
 	
 	@DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
@@ -73,11 +73,15 @@ public class OracleTest {
     @Test
     void testTableExists() throws SQLException {
         try (Connection conn = this.dataSource.getConnection();
-            ResultSet resultSet = conn.prepareStatement("SHOW TABLES").executeQuery();) {
+            ResultSet resultSet = conn.prepareStatement("SELECT *\r\n"
+            		+ "FROM all_tables\r\n"
+            		+ "WHERE OWNER = 'OT'\r\n"
+            		+ "ORDER BY table_name;").executeQuery();
+        ) {
             resultSet.next();
  
             String table = resultSet.getString(1);
-            assertThat(table).isEqualTo("tests");
+            assertThat(table).isEqualTo("EMPLOYEE");
         }
     }
     
