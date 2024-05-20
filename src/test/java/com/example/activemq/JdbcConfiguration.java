@@ -46,10 +46,12 @@ public class JdbcConfiguration {
                 .withEnv("ORACLE_USER", ORACLE_USER)
                 .withEnv("ORACLE_PASSWORD", ORACLE_PASSWORD);
 
-        CONTAINER.setWaitStrategy(Wait.defaultWaitStrategy()
-                .withStartupTimeout(Duration.ofSeconds(300)));
-
         CONTAINER.start();
+        /*CONTAINER.setWaitStrategy(Wait.defaultWaitStrategy()
+                .withStartupTimeout(Duration.ofSeconds(300)));*/
+        CONTAINER.waitingFor(
+        	Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(300L))
+        );
     }
 	
 	/*private static final GenericContainer<?> oracleContainer;
