@@ -1,4 +1,4 @@
-package com.example.activemq.service;
+package com.example.activemq.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;

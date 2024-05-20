@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -20,6 +21,8 @@ class EmployeeControllerEndToEndTest {
 	private MockMvc mockMvc;
 	
 	
+	@Sql(scripts = { "classpath:db/insert_employee.sql" }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(scripts = { "classpath:db/delete_employee.sql" }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	void testGetAllEmployees() throws Exception {
 		

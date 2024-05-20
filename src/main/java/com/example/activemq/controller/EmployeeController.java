@@ -2,7 +2,7 @@ package com.example.activemq.controller;
 
 import java.util.List;
 
-import com.example.activemq.service.Employee;
+import com.example.activemq.entity.Employee;
 import com.example.activemq.service.EmployeeService;
 
 import org.springframework.http.ResponseEntity;

@@ -2,11 +2,15 @@ package com.example.activemq.service;
 
 import java.util.List;
 
+import com.example.activemq.entity.Employee;
 import com.example.activemq.repository.EmployeeRepository;
 
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +34,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> getEmployees() {
 		
-		return this.employeeRepository.findAll();
+		List<Employee> list = this.employeeRepository.findAll();
+		log.info("List size: [{}]", list.size());
+		
+		return list;
 	}
 
 }
