@@ -9,6 +9,7 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -17,8 +18,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import jakarta.persistence.EntityManagerFactory;
 
 @TestConfiguration
+@EnableJpaRepositories(basePackages = { "com.example.activemq.repository" })
 @ComponentScan(basePackages = { 
-	"com.example.activemq.service", "com.example.activemq.repository" 
+	"com.example.activemq.service" 
 })
 public class JdbcConfiguration extends AbstractIntegrationTest {
 	
