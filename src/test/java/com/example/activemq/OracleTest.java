@@ -71,10 +71,7 @@ public class OracleTest {
     @Test
     void testTableExists() throws SQLException {
         try (Connection conn = this.dataSource.getConnection();
-            ResultSet resultSet = conn.prepareStatement("SELECT *\r\n"
-            		+ "FROM all_tables\r\n"
-            		+ "WHERE OWNER = 'OT'\r\n"
-            		+ "ORDER BY table_name;").executeQuery();
+            ResultSet resultSet = conn.prepareStatement("SELECT * FROM all_tables ORDER BY table_name").executeQuery();
         ) {
             resultSet.next();
  
