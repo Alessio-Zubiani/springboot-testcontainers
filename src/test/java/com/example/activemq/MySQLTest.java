@@ -34,7 +34,8 @@ public class MySQLTest {
             .withEnv("MYSQL_PASSWORD", "pass")
             .withExposedPorts(3306)
             .waitingFor(Wait.forLogMessage(".*mysqld: ready for connections.*", 2))
-            .withCopyFileToContainer(MountableFile.forClasspathResource("init.sql"), "/docker-entrypoint-initdb.d/schema.sql");
+            //.withCopyFileToContainer(MountableFile.forClasspathResource("init.sql"), "/docker-entrypoint-initdb.d/schema.sql")
+            ;
  
     @DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
