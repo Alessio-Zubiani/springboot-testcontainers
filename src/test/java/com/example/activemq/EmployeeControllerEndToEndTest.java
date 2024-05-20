@@ -12,8 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(EmployeeController.class)
-@ContextConfiguration(classes = { JdbcConfiguration.class })
-class EmployeeControllerEndToEndTest {	
+class EmployeeControllerEndToEndTest extends JdbcConfiguration {	
 	
 	@Autowired
 	private MockMvc mockMvc;
