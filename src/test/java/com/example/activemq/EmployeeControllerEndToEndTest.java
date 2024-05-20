@@ -31,7 +31,7 @@ class EmployeeControllerEndToEndTest {
 	@Test
 	void testGetAllEmployees() throws Exception {
 		
-		this.mockMvc.perform(get("/api/v1/employees/").accept(MediaType.APPLICATION_JSON))
+		this.mockMvc.perform(get("api/v1/employees").accept(MediaType.APPLICATION_JSON))
         	.andDo(print())
 			.andExpect(status().isOk());
 	}
