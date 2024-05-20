@@ -1,6 +1,5 @@
-/*package com.example.activemq;
+package com.example.activemq;
 
-import java.time.Duration;
 import java.util.HashMap;
 
 import javax.sql.DataSource;
@@ -13,11 +12,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
-import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.oracle.OracleContainer;
-import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.junit.jupiter.Container;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,28 @@ import lombok.extern.slf4j.Slf4j;
 })
 public class JdbcConfiguration {
 	
-	private static final String DOCKER_IMAGE_NAME = "gvenzl/oracle-free:slim-faststart";
+	@Container
+    private static final GenericContainer<?> oracleContainer = new GenericContainer<>("gvenzl/oracle-free:slim-faststart")
+            .withEnv("ORACLE_DATABASE", "EMPLOYE_DB")
+            .withEnv("ORACLE_USER", "EMPLOYEE_USER")
+            .withEnv("ORACLE_PASSWORD", "EMPLOYEE_PASSWORD")
+            .withExposedPorts(1521)
+            //.waitingFor(Wait.forLogMessage(".*mysqld: ready for connections.*", 2))
+            //.withCopyFileToContainer(MountableFile.forClasspathResource("init.sql"), "/docker-entrypoint-initdb.d/schema.sql")
+            ;
+	
+	@DynamicPropertySource
+    private static void setupProperties(DynamicPropertyRegistry registry) {
+    	//jdbc:tc:oracle:thin:localhost:1521/testcontainer
+    	String url = "jdbc:tc:" + oracleContainer.getDockerImageName() + "://EMPLOYE_DB";
+    	log.info("URL: [{}]", url);
+    	registry.add("spring.datasource.url", () -> url);
+        registry.add("spring.datasource.username", () -> "EMPLOYEE_USER");
+        registry.add("spring.datasource.password", () -> "EMPLOYEE_PASSWORD");
+    }
+	
+	
+	/*private static final String DOCKER_IMAGE_NAME = "gvenzl/oracle-free:slim-faststart";
     private static final String ORACLE_USER = "user";
     private static final String ORACLE_PASSWORD = "pass";
     private static final String ORACLE_DATABASE = "db";
@@ -110,16 +130,16 @@ public class JdbcConfiguration {
         registry.add("spring.datasource.url", oracleContainer.getBoundPortNumbers() ::getJdbcUrl);
         registry.add("spring.datasource.username", oracleContainer::getUsername);
         registry.add("spring.datasource.password", oracleContainer::getPassword);
-    }
+    }*/
 	
 	@Bean
     public DataSource dataSource() {
 		
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("oracle.jdbc.OracleDriver");
-        dataSourceBuilder.url(CONTAINER.getJdbcUrl());
-        dataSourceBuilder.username(CONTAINER.getUsername());
-        dataSourceBuilder.password(CONTAINER.getPassword());
+        dataSourceBuilder.url("jdbc:tc:" + oracleContainer.getDockerImageName() + "://EMPLOYE_DB");
+        dataSourceBuilder.username("EMPLOYEE_USER");
+        dataSourceBuilder.password("EMPLOYEE_PASSWORD");
         
         return dataSourceBuilder.build();
     }
@@ -143,4 +163,4 @@ public class JdbcConfiguration {
 		return new JpaTransactionManager(entityManager);
 	}
 
-}*/
+}

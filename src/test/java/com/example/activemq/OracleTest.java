@@ -1,4 +1,4 @@
-package com.example.activemq;
+/*package com.example.activemq;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
@@ -40,12 +41,12 @@ public class OracleTest {
             //.withCopyFileToContainer(MountableFile.forClasspathResource("init.sql"), "/docker-entrypoint-initdb.d/schema.sql")
             ;
 	
-	/*@Container
+	@Container
 	private static final OracleContainer oracleContainer = new OracleContainer("gvenzl/oracle-free:slim-faststart")
             .withDatabaseName("EMPLOYEE_DB")
             .withUsername("EMPLOYEE_USER")
             .withPassword("EMPLOYEE_PASSWORD")
-            ;*/
+            ;
  
     @DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
@@ -66,6 +67,38 @@ public class OracleTest {
             String table = resultSet.getString(1);
             assertThat(table).isEqualTo("tests");
         }
-    }*/
+    }
+    
+    @Bean
+    public DataSource dataSource() {
+		
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
+        dataSourceBuilder.driverClassName("oracle.jdbc.OracleDriver");
+        dataSourceBuilder.url(CONTAINER.getJdbcUrl());
+        dataSourceBuilder.username(CONTAINER.getUsername());
+        dataSourceBuilder.password(CONTAINER.getPassword());
+        
+        return dataSourceBuilder.build();
+    }
+	
+	@Bean
+	public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
+		return new EntityManagerFactoryBuilder(new HibernateJpaVendorAdapter(), new HashMap<>(), null);
+	}
+	
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManager(EntityManagerFactoryBuilder entityManagerFactoryBuilder, DataSource dataSource) {
+		
+		return entityManagerFactoryBuilder
+				.dataSource(dataSource)
+				.packages("com.example.activemq.service")
+				.build();
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManager) {
+		return new JpaTransactionManager(entityManager);
+	}
 
 }
+*/
