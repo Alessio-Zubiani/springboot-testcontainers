@@ -49,10 +49,9 @@ public class OracleTest {
  
     @DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
-    	OracleContainer o = (OracleContainer) oracleContainer;
-    	log.info("JDBC URL: [{}]", o.getJdbcUrl());
     	//jdbc:tc:oracle:thin:localhost:1521/testcontainer
-    	String url = "jdbc:tc:oracle:thin:" + oracleContainer.getHost() + ":" + oracleContainer.getMappedPort(1521) + "/testcontainer";
+    	String url = "jdbc:tc:" + oracleContainer.getDockerImageName() + "://testcontainer";
+    	log.info("URL: [{}]", url);
     	registry.add("spring.datasource.url", () -> url);
         registry.add("spring.datasource.username", () -> "user");
         registry.add("spring.datasource.password", () -> "pass");
