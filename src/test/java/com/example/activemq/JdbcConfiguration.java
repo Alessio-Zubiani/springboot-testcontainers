@@ -9,12 +9,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
 @EnableJpaRepositories(basePackages = { "com.example.activemq.repository" })
@@ -35,10 +33,10 @@ public class JdbcConfiguration extends AbstractIntegrationTest {
         return dataSourceBuilder.build();
     }
 	
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManager(EntityManagerFactoryBuilder entityManagerFactoryBuilder, DataSource dataSource) {
-		
-		LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+	@Bean("entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+    	
+    	LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(this.dataSource());
         localContainerEntityManagerFactoryBean.setPackagesToScan("com.example.activemq.service");
         
@@ -46,7 +44,7 @@ public class JdbcConfiguration extends AbstractIntegrationTest {
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
         
         return localContainerEntityManagerFactoryBean;
-	}
+    }
 	
 	@Bean
     public PlatformTransactionManager transactionManager(DataSource dataSource) {
