@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Duration;
 
 import javax.sql.DataSource;
 
@@ -58,7 +59,8 @@ public class OracleTest {
 					.asCompatibleSubstituteFor("gvenzl/oracle-free"))
 			.withDatabaseName("EMPLOYEE_DB")
             .withUsername("EMPLOYEE_USER")
-            .withPassword("EMPLOYEE_PASSWORD");
+            .withPassword("EMPLOYEE_PASSWORD")
+            .withStartupTimeout(Duration.ofMinutes(5L));
 	
 	@DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
