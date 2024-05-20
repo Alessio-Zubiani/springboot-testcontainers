@@ -7,7 +7,6 @@ import javax.sql.DataSource;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -15,12 +14,14 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.oracle.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import jakarta.persistence.EntityManagerFactory;
 
 
+@Testcontainers
 @TestConfiguration
 @ComponentScan(basePackages = { 
 	"com.example.activemq.service", "com.example.activemq.repository" 
@@ -28,7 +29,6 @@ import jakarta.persistence.EntityManagerFactory;
 public class JdbcConfiguration {
 	
 	@Container
-    @ServiceConnection
     static OracleContainer oracleContainer = new OracleContainer(
             DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
                     .asCompatibleSubstituteFor("gvenzl/oracle-free"))
