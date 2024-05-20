@@ -14,7 +14,7 @@ import org.testcontainers.utility.DockerImageName;
 
 @TestConfiguration
 @ComponentScan(basePackages = { 
-	"com.example.activemq.service" 
+	"com.example.activemq.service", "com.example.activemq.repository" 
 })
 public class JdbcConfiguration {
 	
