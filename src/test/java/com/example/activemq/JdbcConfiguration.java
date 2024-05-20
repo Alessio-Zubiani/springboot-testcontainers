@@ -1,6 +1,7 @@
 package com.example.activemq;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -152,9 +153,13 @@ public class JdbcConfiguration {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManager(EntityManagerFactoryBuilder entityManagerFactoryBuilder, DataSource dataSource) {
 		
+		Map<String, String> properties = new HashMap<>();
+		properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle8iDialect");
+		
 		return entityManagerFactoryBuilder
 				.dataSource(dataSource)
 				.packages("com.example.activemq.service")
+				.properties(properties)
 				.build();
 	}
 	
