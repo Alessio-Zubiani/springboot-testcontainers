@@ -133,7 +133,7 @@ public class JdbcConfiguration {
         registry.add("spring.datasource.password", oracleContainer::getPassword);
     }*/
 	
-	@Bean
+	/*@Bean
     public DataSource dataSource() {
 		
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
@@ -166,6 +166,6 @@ public class JdbcConfiguration {
 	@Bean
 	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManager) {
 		return new JpaTransactionManager(entityManager);
-	}
+	}*/
 
 }
