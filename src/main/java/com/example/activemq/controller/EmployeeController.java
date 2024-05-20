@@ -38,7 +38,7 @@ public class EmployeeController {
 		return ResponseEntity.ok().body(e);
 	}*/
 	
-	@GetMapping("/")
+	@GetMapping
 	public ResponseEntity<List<Employee>> getAllEmployees() {
 		
 		//List<Employee> list = this.service.getEmployees();
