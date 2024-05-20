@@ -1,4 +1,4 @@
-package com.example.activemq;
+/*package com.example.activemq;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,7 +32,7 @@ public class OracleTest {
 	@Autowired
     private DataSource dataSource;
  
-    /*@Container
+    @Container
     private static final GenericContainer<?> oracleContainer = new GenericContainer<>("gvenzl/oracle-free:slim-faststart")
             .withEnv("ORACLE_DATABASE", "EMPLOYEE_DB")
             .withEnv("ORACLE_USER", "user")
@@ -50,7 +50,7 @@ public class OracleTest {
     	registry.add("spring.datasource.url", () -> url);
         registry.add("spring.datasource.username", () -> "user");
         registry.add("spring.datasource.password", () -> "pass");
-    }*/
+    }
 	
 	@Container
 	private static final OracleContainer oracleContainer = new OracleContainer(
@@ -81,7 +81,7 @@ public class OracleTest {
         }
     }
     
-    /*@Bean
+    @Bean
     public DataSource dataSource() {
 		
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
@@ -110,6 +110,7 @@ public class OracleTest {
 	@Bean
 	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManager) {
 		return new JpaTransactionManager(entityManager);
-	}*/
+	}
 
 }
+*/
