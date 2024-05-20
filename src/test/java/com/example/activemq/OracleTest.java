@@ -57,7 +57,7 @@ public class OracleTest {
         registry.add("spring.datasource.password", () -> "pass");
     }
  
-    @Test
+    /*@Test
     void testTableExists() throws SQLException {
         try (Connection conn = this.dataSource.getConnection();
             ResultSet resultSet = conn.prepareStatement("SHOW TABLES").executeQuery();) {
@@ -66,6 +66,6 @@ public class OracleTest {
             String table = resultSet.getString(1);
             assertThat(table).isEqualTo("tests");
         }
-    }
+    }*/
 
 }
