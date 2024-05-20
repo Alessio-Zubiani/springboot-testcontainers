@@ -49,13 +49,11 @@ public class OracleTest {
  
     @DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
-    	oracleContainer.getEnv().forEach(e -> {
-    		log.info("Env: [{}]", e);
-    	});
-    	log.info("Host: [{}]", oracleContainer.getHost());
-    	/*registry.add("spring.datasource.url", () -> oracleContainer.getJdbcUrl());
-        registry.add("spring.datasource.username", () -> oracleContainer.getUsername());
-        registry.add("spring.datasource.password", () -> oracleContainer.getPassword());*/
+    	//jdbc:tc:oracle:thin:localhost:1521///testcontainer
+    	String url = "jdbc:tc:oracle:thin:" + oracleContainer.getHost() + ":" + oracleContainer.getMappedPort(1521) + "///testcontainer";
+    	registry.add("spring.datasource.url", () -> url);
+        registry.add("spring.datasource.username", () -> "user");
+        registry.add("spring.datasource.password", () -> "pass");
     }
  
     @Test
