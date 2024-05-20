@@ -1,4 +1,4 @@
-package com.example.activemq;
+/*package com.example.activemq;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -20,9 +20,10 @@ import org.testcontainers.oracle.OracleContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import jakarta.persistence.EntityManagerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 
-@SuppressWarnings("resource")
 @TestConfiguration
 @ComponentScan(basePackages = { 
 	"com.example.activemq.service", "com.example.activemq.repository" 
@@ -40,29 +41,29 @@ public class JdbcConfiguration {
         DockerImageName imageName = DockerImageName.parse(DOCKER_IMAGE_NAME).asCompatibleSubstituteFor("gvenzl/oracle-free");
         
         CONTAINER = (OracleContainer) new OracleContainer(imageName)
-                /*.withDatabaseName(ORACLE_DATABASE)
+                .withDatabaseName(ORACLE_DATABASE)
                 .withUsername(ORACLE_USER)
                 .withPassword(ORACLE_PASSWORD)
                 .withEnv("ORACLE_DATABASE", ORACLE_DATABASE)
                 .withEnv("ORACLE_USER", ORACLE_USER)
-                .withEnv("ORACLE_PASSWORD", ORACLE_PASSWORD)*/
+                .withEnv("ORACLE_PASSWORD", ORACLE_PASSWORD)
         		;
 
-        System.out.println("STARTING ORACLE CONTAINER");
+        log.info("STARTING ORACLE CONTAINER");
         CONTAINER.start();
-        /*CONTAINER.setWaitStrategy(Wait.defaultWaitStrategy()
-                .withStartupTimeout(Duration.ofSeconds(300)));*/
-        System.out.println("WAITING ORACLE CONTAINER TO START");
-        /*CONTAINER.waitingFor(
+        CONTAINER.setWaitStrategy(Wait.defaultWaitStrategy()
+                .withStartupTimeout(Duration.ofSeconds(300)));
+        log.info("WAITING ORACLE CONTAINER TO START");
+        CONTAINER.waitingFor(
         	Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(300L))
-        );*/
+        );
         
-        String regex = ".*(\"message\":\\s?\"started\".*|] started\n$)";
+        String regex = ".*DATABASE IS READY TO USE\n$)";
         CONTAINER.setWaitStrategy((new LogMessageWaitStrategy())
             .withRegEx(regex)
             .withStartupTimeout(Duration.ofMinutes(5)));
         
-        System.out.println("ORACLE CONTAINER STARTED");
+        log.info("ORACLE CONTAINER STARTED");
     }
 	
 	/*private static final GenericContainer<?> oracleContainer;
@@ -109,7 +110,7 @@ public class JdbcConfiguration {
         registry.add("spring.datasource.url", oracleContainer.getBoundPortNumbers() ::getJdbcUrl);
         registry.add("spring.datasource.username", oracleContainer::getUsername);
         registry.add("spring.datasource.password", oracleContainer::getPassword);
-    }*/
+    }
 	
 	@Bean
     public DataSource dataSource() {
@@ -142,4 +143,4 @@ public class JdbcConfiguration {
 		return new JpaTransactionManager(entityManager);
 	}
 
-}
+}*/
