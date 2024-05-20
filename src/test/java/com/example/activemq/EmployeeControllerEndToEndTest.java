@@ -13,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SpringBootTest
 @Testcontainers
 @WebMvcTest(EmployeeController.class)
 @ContextConfiguration(classes = { JdbcConfiguration.class })
