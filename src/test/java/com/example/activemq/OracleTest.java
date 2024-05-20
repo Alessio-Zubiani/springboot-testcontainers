@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.oracle.OracleContainer;
 
 @SpringBootTest
 @Testcontainers
@@ -24,24 +23,28 @@ public class OracleTest {
 	@Autowired
     private DataSource dataSource;
  
-    @Container
+    /*@Container
     private static final GenericContainer<?> oracleContainer = new GenericContainer<>("gvenzl/oracle-free:slim-faststart")
-            /*.withEnv("ORACLE_ROOT_PASSWORD", "pass")*/
+            .withEnv("ORACLE_ROOT_PASSWORD", "pass")
             .withEnv("ORACLE_DATABASE", "testcontainer")
             .withEnv("ORACLE_USER", "user")
             .withEnv("ORACLE_PASSWORD", "pass")
             .withExposedPorts(1521)
-            //.waitingFor(Wait.forLogMessage(".*mysqld: ready for connections.*", 2))
-            //.withCopyFileToContainer(MountableFile.forClasspathResource("init.sql"), "/docker-entrypoint-initdb.d/schema.sql")
+            .waitingFor(Wait.forLogMessage(".*mysqld: ready for connections.*", 2))
+            .withCopyFileToContainer(MountableFile.forClasspathResource("init.sql"), "/docker-entrypoint-initdb.d/schema.sql")
+            ;*/
+	
+	private static final OracleContainer oracleContainer = new OracleContainer("gvenzl/oracle-free:slim-faststart")
+            .withDatabaseName("EMPLOYEE_DB")
+            .withUsername("EMPLOYEE_USER")
+            .withPassword("EMPLOYEE_PASSWORD")
             ;
  
     @DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
-    	//jdbc:oracle:thin:@oratest.popso.it:1521/oltptestsrv.popso.it
-        String url = "jdbc:oracle:thin:@localhost:" + oracleContainer.getMappedPort(1521) + "/testcontainer";
-        registry.add("spring.datasource.url", () -> url);
-        registry.add("spring.datasource.username", () -> "user");
-        registry.add("spring.datasource.password", () -> "pass");
+    	registry.add("spring.datasource.url", () -> oracleContainer.getJdbcUrl());
+        registry.add("spring.datasource.username", () -> oracleContainer.getUsername());
+        registry.add("spring.datasource.password", () -> oracleContainer.getPassword());
     }
  
     @Test
