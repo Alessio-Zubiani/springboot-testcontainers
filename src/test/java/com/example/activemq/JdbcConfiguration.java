@@ -9,6 +9,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -21,6 +22,7 @@ import jakarta.persistence.EntityManagerFactory;
 
 
 @SuppressWarnings("resource")
+@Configuration
 @ComponentScan(basePackages = { 
 	"com.example.activemq.service", "com.example.activemq.repository" 
 })
