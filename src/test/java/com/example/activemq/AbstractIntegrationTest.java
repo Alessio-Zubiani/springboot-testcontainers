@@ -32,7 +32,7 @@ public abstract class AbstractIntegrationTest {
     
     
     @Container
-	private static final OracleContainer oracleContainer = new OracleContainer(ORACLE_IMAGE.asCompatibleSubstituteFor("gvenzl/oracle-free"))
+	protected static final OracleContainer oracleContainer = new OracleContainer(ORACLE_IMAGE.asCompatibleSubstituteFor("gvenzl/oracle-free"))
             .withUsername(USERNAME)
             .withReuse(true)
             .withInitScript("init_employee_db.sql")
@@ -45,36 +45,5 @@ public abstract class AbstractIntegrationTest {
         registry.add("spring.datasource.username", () -> oracleContainer.getUsername());
         registry.add("spring.datasource.password", () -> oracleContainer.getPassword());
     }
-	
-	@Bean
-    public DataSource dataSource() {
-		
-        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("oracle.jdbc.OracleDriver");
-        dataSourceBuilder.url(oracleContainer.getJdbcUrl());
-        dataSourceBuilder.username(oracleContainer.getUsername());
-        dataSourceBuilder.password(oracleContainer.getPassword());
-        
-        return dataSourceBuilder.build();
-    }
-	
-	@Bean
-	public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
-		return new EntityManagerFactoryBuilder(new HibernateJpaVendorAdapter(), new HashMap<>(), null);
-	}
-	
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManager(EntityManagerFactoryBuilder entityManagerFactoryBuilder, DataSource dataSource) {
-		
-		return entityManagerFactoryBuilder
-				.dataSource(dataSource)
-				.packages("com.example.activemq.service")
-				.build();
-	}
-	
-	@Bean
-	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManager) {
-		return new JpaTransactionManager(entityManager);
-	}
 
 }

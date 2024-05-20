@@ -8,15 +8,13 @@ import com.example.activemq.controller.EmployeeController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 
 @WebMvcTest(EmployeeController.class)
-@ComponentScan(basePackages = { 
-	"com.example.activemq.service", "com.example.activemq.repository" 
-})
-class EmployeeControllerEndToEndTest extends AbstractIntegrationTest {	
+@ContextConfiguration(classes = { JdbcConfiguration.class })
+class EmployeeControllerEndToEndTest {	
 	
 	@Autowired
 	private MockMvc mockMvc;
