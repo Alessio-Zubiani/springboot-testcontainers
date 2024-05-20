@@ -68,12 +68,4 @@ public class ArrayOftCountryInfo {
         return this.tCountryInfo;
     }
 
-    public void setTCountryInfo(List<TCountryInfo> value) {
-        this.tCountryInfo = null;
-        if (value!= null) {
-            List<TCountryInfo> draftl = this.getTCountryInfo();
-            draftl.addAll(value);
-        }
-    }
-
 }

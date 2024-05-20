@@ -1,5 +1,6 @@
 package com.example.activemq.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.activemq.entity.Employee;
@@ -18,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EmployeeController {
 
-	private final EmployeeService service;
+	/*private final EmployeeService service;
 	
 	
 	@GetMapping
@@ -35,6 +36,15 @@ public class EmployeeController {
 		Employee e = this.service.createEmployee();
 		
 		return ResponseEntity.ok().body(e);
+	}*/
+	
+	@GetMapping
+	public ResponseEntity<List<Employee>> getAllEmployees() {
+		
+		//List<Employee> list = this.service.getEmployees();
+		List<Employee> list = new ArrayList<>();
+		
+		return ResponseEntity.ok().body(list);
 	}
 	
 }

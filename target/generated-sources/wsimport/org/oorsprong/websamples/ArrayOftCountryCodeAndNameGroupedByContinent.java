@@ -68,12 +68,4 @@ public class ArrayOftCountryCodeAndNameGroupedByContinent {
         return this.tCountryCodeAndNameGroupedByContinent;
     }
 
-    public void setTCountryCodeAndNameGroupedByContinent(List<TCountryCodeAndNameGroupedByContinent> value) {
-        this.tCountryCodeAndNameGroupedByContinent = null;
-        if (value!= null) {
-            List<TCountryCodeAndNameGroupedByContinent> draftl = this.getTCountryCodeAndNameGroupedByContinent();
-            draftl.addAll(value);
-        }
-    }
-
 }

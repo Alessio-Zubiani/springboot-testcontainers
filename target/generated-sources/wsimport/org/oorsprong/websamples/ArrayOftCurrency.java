@@ -68,12 +68,4 @@ public class ArrayOftCurrency {
         return this.tCurrency;
     }
 
-    public void setTCurrency(List<TCurrency> value) {
-        this.tCurrency = null;
-        if (value!= null) {
-            List<TCurrency> draftl = this.getTCurrency();
-            draftl.addAll(value);
-        }
-    }
-
 }

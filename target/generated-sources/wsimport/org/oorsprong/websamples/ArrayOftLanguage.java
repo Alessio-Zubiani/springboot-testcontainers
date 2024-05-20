@@ -68,12 +68,4 @@ public class ArrayOftLanguage {
         return this.tLanguage;
     }
 
-    public void setTLanguage(List<TLanguage> value) {
-        this.tLanguage = null;
-        if (value!= null) {
-            List<TLanguage> draftl = this.getTLanguage();
-            draftl.addAll(value);
-        }
-    }
-
 }

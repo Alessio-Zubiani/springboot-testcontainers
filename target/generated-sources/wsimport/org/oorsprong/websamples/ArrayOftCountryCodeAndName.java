@@ -68,12 +68,4 @@ public class ArrayOftCountryCodeAndName {
         return this.tCountryCodeAndName;
     }
 
-    public void setTCountryCodeAndName(List<TCountryCodeAndName> value) {
-        this.tCountryCodeAndName = null;
-        if (value!= null) {
-            List<TCountryCodeAndName> draftl = this.getTCountryCodeAndName();
-            draftl.addAll(value);
-        }
-    }
-
 }

@@ -68,12 +68,4 @@ public class ArrayOftContinent {
         return this.tContinent;
     }
 
-    public void setTContinent(List<TContinent> value) {
-        this.tContinent = null;
-        if (value!= null) {
-            List<TContinent> draftl = this.getTContinent();
-            draftl.addAll(value);
-        }
-    }
-
 }
