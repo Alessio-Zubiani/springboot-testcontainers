@@ -154,7 +154,7 @@ public class JdbcConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManager(EntityManagerFactoryBuilder entityManagerFactoryBuilder, DataSource dataSource) {
 		
 		Map<String, String> properties = new HashMap<>();
-		properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle8iDialect");
+		properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
 		
 		return entityManagerFactoryBuilder
 				.dataSource(dataSource)
