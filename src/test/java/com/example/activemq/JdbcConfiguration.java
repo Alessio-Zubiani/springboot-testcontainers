@@ -1,4 +1,4 @@
-package com.example.activemq;
+/*package com.example.activemq;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -131,9 +131,9 @@ public class JdbcConfiguration {
         registry.add("spring.datasource.url", oracleContainer.getBoundPortNumbers() ::getJdbcUrl);
         registry.add("spring.datasource.username", oracleContainer::getUsername);
         registry.add("spring.datasource.password", oracleContainer::getPassword);
-    }*/
+    }
 	
-	/*@Bean
+	@Bean
     public DataSource dataSource() {
 		
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
@@ -154,7 +154,6 @@ public class JdbcConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManager(EntityManagerFactoryBuilder entityManagerFactoryBuilder, DataSource dataSource) {
 		
 		Map<String, String> properties = new HashMap<>();
-		properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
 		
 		return entityManagerFactoryBuilder
 				.dataSource(dataSource)
@@ -166,6 +165,7 @@ public class JdbcConfiguration {
 	@Bean
 	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManager) {
 		return new JpaTransactionManager(entityManager);
-	}*/
+	}
 
 }
+*/

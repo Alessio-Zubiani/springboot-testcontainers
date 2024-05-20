@@ -1,4 +1,4 @@
-/*package com.example.activemq;
+package com.example.activemq;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,6 +18,7 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.oracle.OracleContainer;
+import org.testcontainers.utility.DockerImageName;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +31,7 @@ public class OracleTest {
 	@Autowired
     private DataSource dataSource;
  
-    @Container
+    /*@Container
     private static final GenericContainer<?> oracleContainer = new GenericContainer<>("gvenzl/oracle-free:slim-faststart")
             .withEnv("ORACLE_ROOT_PASSWORD", "pass")
             .withEnv("ORACLE_DATABASE", "testcontainer")
@@ -40,14 +41,7 @@ public class OracleTest {
             //.waitingFor(Wait.forLogMessage(".*mysqld: ready for connections.*", 2))
             //.withCopyFileToContainer(MountableFile.forClasspathResource("init.sql"), "/docker-entrypoint-initdb.d/schema.sql")
             ;
-	
-	@Container
-	private static final OracleContainer oracleContainer = new OracleContainer("gvenzl/oracle-free:slim-faststart")
-            .withDatabaseName("EMPLOYEE_DB")
-            .withUsername("EMPLOYEE_USER")
-            .withPassword("EMPLOYEE_PASSWORD")
-            ;
- 
+    
     @DynamicPropertySource
     private static void setupProperties(DynamicPropertyRegistry registry) {
     	//jdbc:tc:oracle:thin:localhost:1521/testcontainer
@@ -56,6 +50,22 @@ public class OracleTest {
     	registry.add("spring.datasource.url", () -> url);
         registry.add("spring.datasource.username", () -> "user");
         registry.add("spring.datasource.password", () -> "pass");
+    }*/
+	
+	@Container
+	private static final OracleContainer oracleContainer = new OracleContainer(
+				DockerImageName.parse("gvenzl/oracle-free:slim-faststart")
+					.asCompatibleSubstituteFor("gvenzl/oracle-free"))
+			.withDatabaseName("EMPLOYEE_DB")
+            .withUsername("EMPLOYEE_USER")
+            .withPassword("EMPLOYEE_PASSWORD");
+	
+	@DynamicPropertySource
+    private static void setupProperties(DynamicPropertyRegistry registry) {
+    	log.info("URL: [{}]", oracleContainer.getJdbcUrl());
+    	registry.add("spring.datasource.url", () -> oracleContainer.getJdbcUrl());
+        registry.add("spring.datasource.username", () -> oracleContainer.getUsername());
+        registry.add("spring.datasource.password", () -> oracleContainer.getPassword());
     }
  
     /*@Test
@@ -98,7 +108,6 @@ public class OracleTest {
 	@Bean
 	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManager) {
 		return new JpaTransactionManager(entityManager);
-	}
+	}*/
 
 }
-*/
