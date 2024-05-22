@@ -2,6 +2,8 @@ package com.example.activemq;
 
 import javax.sql.DataSource;
 
+import org.flywaydb.core.Flyway;
+import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,10 +35,10 @@ public class JdbcConfiguration extends AbstractIntegrationTest {
     }
 	
 	@Bean("entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource) {
     	
     	LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        localContainerEntityManagerFactoryBean.setDataSource(this.dataSource());
+        localContainerEntityManagerFactoryBean.setDataSource(dataSource);
         localContainerEntityManagerFactoryBean.setPackagesToScan("com.example.activemq.entity");
         
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
@@ -49,5 +51,18 @@ public class JdbcConfiguration extends AbstractIntegrationTest {
     public PlatformTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
+	
+	@Bean
+	public FlywayMigrationStrategy repairAndMigrateStrategy(DataSource dataSource) {
+		
+		Flyway.configure()
+        		.dataSource(dataSource)
+        		.load();
+		
+		return flyway -> {
+			flyway.clean();
+            flyway.migrate();
+		};
+	}
 
 }

@@ -21,7 +21,7 @@ public abstract class AbstractIntegrationTest {
 	protected static final OracleContainer oracleContainer = new OracleContainer(ORACLE_IMAGE.asCompatibleSubstituteFor("gvenzl/oracle-free"))
             .withUsername(USERNAME)
             .withReuse(true)
-            .withInitScript("init_employee_db.sql")
+            //.withInitScript("init_employee_db.sql")
             .withStartupTimeout(Duration.ofMinutes(5L));
     
     static {
