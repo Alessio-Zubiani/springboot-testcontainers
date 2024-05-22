@@ -32,7 +32,7 @@ class EmployeeControllerEndToEndTest {
 	
 	
 	@Sql(scripts = { "classpath:db/insert_employee.sql" }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-	//@Sql(scripts = { "classpath:db/delete_employee.sql" }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(scripts = { "classpath:db/delete_employee.sql" }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Order(1)
 	void testGetAllEmployees() throws Exception {
@@ -42,7 +42,7 @@ class EmployeeControllerEndToEndTest {
 			.andExpect(status().isOk());
 	}
 	
-	//@Sql(scripts = { "classpath:db/delete_employee.sql" }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(scripts = { "classpath:db/delete_employee.sql" }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Order(2)
 	void testCreateEmployee() throws Exception {
